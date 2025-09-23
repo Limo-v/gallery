@@ -11,6 +11,16 @@ pipeline {
                 sh 'node server'
             }
         }
+        stage('Slack Notification') {
+            steps {
+                script {
+                    def slackMessage = "Build ${env.BUILD_ID} succeeded! Visit the site: https://gallery-u2na.onrender.com"
+                    sh """
+                    curl -X POST -H 'Content-type: application/json' --data '{"text":"${slackMessage}"}' ${env.SLACK_WEBHOOK_URL}
+                    """
+                }
+            }
+        }
         
     }
     post {
