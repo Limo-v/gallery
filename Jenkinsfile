@@ -13,6 +13,13 @@ pipeline {
         }
         
     }
+    post {
+        failure {
+            mail to: 'victor.kibet4@student.moringaschool.com',
+                 subject: "Build Failed",
+                 body: "Check the Jenkins console output for details."
+        }
+    }
     triggers {
         pollSCM('* * * * *') 
     }
